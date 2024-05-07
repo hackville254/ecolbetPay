@@ -13,18 +13,24 @@ router = Router()
 
 
 @router.post('login', tags=['LOGIN ROUTER'], auth=None)
-def login(request, data: LoginSchemas):
+def login(request, data: LoginSchemas): 
     username = data.username
     mdp = data.motPasse
-    u = User.objects.filter(username=username).exists()
-    if u:
-        user = authenticate(request, username=username, password=mdp)
-        if user is not None:
+    try:
+        user = User.objects.get(username=username)
+        authenticated_user = authenticate(request, username=username, password=mdp)
+        if authenticated_user is not None:
             # User is authenticated, generate the JWT token
+            print('user id : ', user.id)
             token = create_token(user.id)
-        return {"token": token}
-    else:
+            print(token)
+            return {"token": token}
+        else:
+            raise HttpError(status_code=401, message="Authentication failed")
+    except User.DoesNotExist:
         raise HttpError(status_code=404, message="User not found")
+    except Exception as e:
+        raise HttpError(status_code=500, message="Internal server error ")
 
 
 random_numbers = str(random.randint(0, 99994)).zfill(4) + \
@@ -51,7 +57,7 @@ def initial(request, data: Initialisation):
 @router.post('check/ecolbet/id', tags=['CHECK TRANSACTION WITCH *ecolbet_id* ROUTER'])
 def check(request, t: EcolbetIdSchemas):
     try:
-        c = checkPaymentT(t.transcactionId)
+        c = checkPaymentT(t.ecolbet_id)
         code = c['code']
         message = c['message']
         amount = c['data']['amount']

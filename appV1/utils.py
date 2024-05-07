@@ -1,5 +1,5 @@
 import jwt
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import random
 # Secret key for signing and verifying tokens
 SECRET_KEY = 'your-secret-key'
@@ -10,7 +10,7 @@ SECRET_KEY = 'your-secret-key'
 def create_token(user_id):
     try:
         # Set the expiration time for the token
-        expiration = datetime.utcnow() + timedelta(days=1)
+        expiration = datetime.now(timezone.utc) + timedelta(days=1)
 
         # Create the payload containing the user ID and expiration time
         payload = {
@@ -38,7 +38,7 @@ def verify_token(token):
         expiration = payload['exp']
 
         # Check if the token has expired
-        if datetime.utcnow() > datetime.fromtimestamp(expiration):
+        if datetime.now(timezone.utc) > datetime.fromtimestamp(expiration, timezone.utc):
             # Refresh the token
             refreshed_token = refresh_token(token)
             if refreshed_token:
@@ -70,7 +70,7 @@ def refresh_token(token):
         user_id = payload['user_id']
 
         # Create a new expiration time for the token
-        expiration = datetime.utcnow() + timedelta(days=1)
+        expiration = datetime.now(timezone.utc) + timedelta(days=365)
 
         # Update the payload with the new expiration time
         payload['exp'] = expiration
