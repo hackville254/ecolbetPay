@@ -13,7 +13,7 @@ services:
     container_name: ecolebetPayDb_container
 
   web:
-    build: .
+    build: ./
     restart: always
     ports:
       - "8923:8923"
