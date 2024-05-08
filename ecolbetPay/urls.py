@@ -18,6 +18,6 @@ from django.contrib import admin
 from django.urls import path
 from .api import app
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/ecolbetpay/administration/', admin.site.urls),
     path('ecolbetpay/api/',app.urls),
 ]

@@ -54,7 +54,7 @@ def initial(request, data: Initialisation):
         raise HttpError(status_code=404, message="Ressource not found")
 
 
-@router.post('check/ecolbet/id', tags=['CHECK TRANSACTION WITCH *ecolbet_id* ROUTER'])
+@router.post('check/ecolbet/id', tags=['CHECK TRANSACTION WITH *ecolbet_id* ROUTER'])
 def check(request, t: EcolbetIdSchemas):
     try:
         c = checkPaymentT(t.ecolbet_id)
@@ -71,7 +71,7 @@ def check(request, t: EcolbetIdSchemas):
         raise HttpError(status_code=404, message='ecolbet_id not found')
 
 
-@router.post('check/token', tags=['CHECK TRANSACTION WITCH *token* ROUTER'])
+@router.post('check/token', tags=['CHECK TRANSACTION WITH *token* ROUTER'])
 def check_TOKEN(request, token: TokenSchemas):
     try:
         token = checkPaymentToken(token.token)
