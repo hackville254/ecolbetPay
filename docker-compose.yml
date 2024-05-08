@@ -9,6 +9,8 @@ services:
     volumes:
       - .:/ecolbetPay
     image: web:ecolbetPayApi_image
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
     env_file:
       - .env
     container_name: ecolbetPayApi_container
