@@ -24,4 +24,4 @@ COPY . /ecolebetPay/
 EXPOSE 8923
 
 # Commande pour démarrer l'application Django
-#CMD ["gunicorn", "--bind", "0.0.0.0:8923", "ecolbetPay.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8923", "ecolbetPay.wsgi:application"]
