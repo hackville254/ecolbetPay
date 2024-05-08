@@ -1,31 +1,13 @@
 version: '3.9'
 
 services:
-  db:
-    image: postgres:16-alpine
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: ecolebetPay
-      POSTGRES_USER: ecolebetPayUser
-      POSTGRES_PASSWORD: RxJvn3Xf9q2ZhO0GjzEIMIrnBQXHMj8qnDXXiOxqfsoDdG4e2deyv5KLNDF7
-    restart: always
-    container_name: ecolebetPayDb_container
-
   web:
     build: .
     restart: always
     ports:
       - "8923:8923"
-    depends_on:
-      - db
     volumes:
-      - .:/ecolebetPay
-    image: web:ecolebetPay_image
-    container_name: ecolebetPay_container
+      - .:/ecolbetPay
+    image: web:ecolbetPayApi_image
+    container_name: ecolbetPayApi_container
     command: gunicorn --bind 0.0.0.0:8923 ecolbetPay.wsgi:application
-
-
-volumes:
-  postgres_data:
-    driver: local
