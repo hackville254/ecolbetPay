@@ -1,7 +1,7 @@
 from ninja import NinjaAPI
 from appV1.views import router as payRouter
 from ninja.security import HttpBearer
-
+from appV1.soleay import router as soleayRouter
 from appV1.utils import verify_token
 
 class GlobalAuth(HttpBearer):
@@ -15,3 +15,4 @@ app = NinjaAPI(
 )
 
 app.add_router("/v1/", payRouter)
+app.add_router("/v1/", soleayRouter)
