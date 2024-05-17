@@ -29,3 +29,9 @@ class EcolbetIdSchemas(Schema):
 
 class TokenSchemas(Schema):
     token: str
+
+
+class MySoleaPay(Schema):
+    operator : int
+    customer_number : str
+    amount:float
